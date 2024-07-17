@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<meta charset="UTF-8">
+
+<style type="text/css">
+body {
+	color: purple;
+}
+
+h1 {
+	text-align: center;
+}
+
+div {
+	width: 400px;
+	margin: 50px auto;
+	padding: 15px;
+	background-color: smocke;
+	border: 1px solid purple; input { display : block;
+	margin-bottom: 15px;
+}
+
+input {
+	color: purple;
+	margin: 0 auto;
+	display: block;
+	margin-bottom: 15px;
+	border: 1px solid purple;
+	padding: 7px;
+	display: block;
+}}
+</style>
+</head>
+<body>
+	<div>
+		<h1>Buscar resultado</h1>
+		
+			URL: <input type="text" name="url" id="url"><br>
+			 <input type="button" value="Buscar" id="buscar">
+		
+	</div>
+	<div id="resultado">
+	
+	</div>
+	
+	<script>
+        $(document).ready(function() {
+            $("#buscar").click( function() {
+                
+             
+                var url = $("#url").val(); // Obtiene el valor del input
+                
+                $.get("buscarUno", { "url": url }, function(data) {
+                    // Esta función se ejecuta cuando la petición es exitosa
+                    if (data && Object.keys(data).length !== 0) {
+                        var resultadoHtml = "<p>URL: <a href='" + data.url + "'>" + data.url + "</a></p>" +
+                                            "<p>Temática: " + data.tematica + "</p>" +
+                                            "<p>Descripción: " + data.descripcion + "</p>";
+                        
+                        $("#resultado").html(resultadoHtml);
+                    } else {
+                        $("#resultado").html("<p>No se encontraron resultados para la URL proporcionada.</p>");
+                    }
+                })
+                .fail(function(jqXHR, textStatus, errorThrown) {
+                    // Esta función se ejecuta si hay un error en la petición
+                    console.error("Error en la petición AJAX:", textStatus, errorThrown);
+                    alert("Error al buscar el resultado. Por favor, intente de nuevo.");
+                    $("#resultado").html("<p>Error al buscar el resultado.</p>");
+                });
+            });
+        });
+    </script> 
+</body>
+</html> 
