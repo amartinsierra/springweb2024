@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autenticación de Usuarios</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- las siguientes etiquetas meta sirven para que el navegador
+	no cachee la página
+	-->
+	<meta http-equiv="Expires" content="0">
+	<meta http-equiv="Last-Modified" content="0">
+	<meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+	<meta http-equiv="Pragma" content="no-cache">
+</head>
+<body>
+	<div class="container">
+        <div class="login-box">
+        	<div class="input-group">
+				<label for="usuario">Usuario:</label>
+				<input type="text" id="usuario">
+			</div>
+			<div class="input-group">
+				<label for="password">Password: </label>
+				<input type="password" id="password">
+			</div>
+			<div class="input-group">
+				<label for="repetir">Repetir password:</label>
+				<input type="password" id="repetir">
+			</div>
+			<div class="input-group">
+				<label for="email">Email:</label>
+				<input type="text" id="email">
+			</div>
+			<div class="input-group">
+				<label for="telefono">Teléfono:</label>
+				<input type="text" id="telefono">
+			</div>
+			<div class="input-group">
+				<input type="button" value="Registrar" id="registrar">
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$("#registrar").click(function(){
+			if($("#password").val()==$("#repetir").val()){
+				var url="registrarCliente";
+				var params={
+						"usuario":$("#usuario").val(),
+						"password":$("#password").val(),
+						"email":$("#email").val(),
+						"telefono":$("#telefono").val()
+					};
+				$.post(url,params,function(data){
+					let mensaje;
+					if(data=="true"){
+						//le mandamos a la página de login
+						document.location.href="toLogin";
+					}else{
+						alert("Usuario repetido, debe introducir un usuario único");
+					}
+					
+				});
+			}else{
+				alert("Los campos de contraseña no coinciden!!!!");
+			}
+			
+		});
+	
+	</script>
+</body>
+</html>

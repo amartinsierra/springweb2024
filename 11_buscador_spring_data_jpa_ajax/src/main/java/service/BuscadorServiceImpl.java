@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import dao.BuscadorDao;
 import entities.Resultado;
@@ -26,7 +27,7 @@ public class BuscadorServiceImpl implements BuscadorService {
 				.toList();
 				
 	}
-
+	@Transactional
 	@Override
 	public boolean agregar(ResultadoDto resultado) {
 		Resultado r=mapeador.resultadoDtoToEntity(resultado);
