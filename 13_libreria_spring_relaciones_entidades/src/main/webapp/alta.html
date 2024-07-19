@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<b th:text="${session.usuario}"></b>
+	<center>
+		ISBN: <input type="text" id="isbn"><br>
+		Título: <input type="text" id="titulo"><br>
+		Autor: <input type="text" id="autor"><br>
+		Precio: <input type="text" id="precio"><br>
+		Páginas: <input type="text" id="paginas"><br>
+		Temática:<select id="tematica" >
+					<option th:each="t:${temas}" th:value="${t.idTema}" th:text="${t.nombreTema}"></option>					
+				</select>
+		<input type="button" value="Alta" id="alta">
+		<br><br>
+		<a href="toInicio">Volver</a>
+	</center>
+	<script type="text/javascript">
+		$("#alta").click(function(){
+			var url="altaLibro";
+			var params={
+					"isbn":$("#isbn").val(),
+					"titulo":$("#titulo").val(),
+					"autor":$("#autor").val(),
+					"precio":$("#precio").val(),
+					"paginas":$("#paginas").val(),
+					"idTema":$("#tematica").val()};
+			$.post(url,params,function(data){
+				let mensaje;
+				if(data=="true"){
+					mensaje="Libro añadido!";
+				}else{
+					mensaje="ISBN duplicado!!, no se ha podido añadir el libro";
+				}
+				alert(mensaje);
+			});
+		});
+	
+	</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+ 
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body>
+<b th:text="${session.usuario}"></b>
+	<center>
+		Seleccione Tema:
+		<select id="temaSel" >
+			<option value="0">-Todos-</option>
+			<option th:each="t:${temas}" th:value="${t.idTema}" th:text="${t.nombreTema}"></option>					
+		</select>
+		<br><br>
+		<div id="tbLibros">
+		
+		</div>
+		<br>
+		<h2>Carrito</h2>
+		<div id="tbCarrito">
+		
+		</div>
+	</center>
+	<script type="text/javascript">
+		$("#temaSel").change(function(){
+			var url="librosTema";
+			var params={"idTema":$("#temaSel").val()};
+			gestionarPeticion(url,params);
+		});
+	
+	function gestionarPeticion(url,params){
+		$.get(url,params,function(data){
+			var tabla="<table border='1'><tr><th>Titulo</th><th>Precio</th><th>Páginas</th><th></th></tr>";
+			$.each(data,function(i,p){
+				tabla+="<tr><td><a href='#' onclick='temaTitulo(\""+p.titulo+"\")'>"+p.titulo+"</a></td><td>"+p.precio+"</td><td>"+p.paginas+"</td><td><a href='#' onclick='agregarCarrito("+p.isbn+")'>Agregar</a></td></tr>";
+			});
+			tabla+="</table>";
+			$("#tbLibros").html(tabla);
+		});
+	}
+	function agregarCarrito(isbn){		
+		var params={"isbn":isbn};
+		pintarCarrito(params,"agregarCarrito");
+	}
+	
+	function quitarCarrito(pos){		
+		var params={"pos":pos};
+		pintarCarrito(params,"eliminarCarrito");
+	}
+	function pintarCarrito(params,url){
+		$.get(url,params,function(data){
+			var tabla="<table border='1'><tr><th>Titulo</th><th>Tematica</th><th>Precio</th><th>Páginas</th><th></th></tr>";
+			$.each(data,function(i,p){
+				tabla+="<tr><td>"+p.titulo+"</td><td>"+p.temaDto.nombreTema+"</td><td>"+p.precio+"</td><td>"+p.paginas+"</td><td><a href='#' onclick='quitarCarrito("+i+")'>Quitar</a></td></tr>";
+			});
+			tabla+="</table>";
+			$("#tbCarrito").html(tabla);
+		});
+	}
+	function temaTitulo(titulo){
+		var params={"titulo":titulo};
+		$.get("temaTitulo",params,function(data){
+			alert("El libro es del tema: "+data.nombreTema);
+		});
+	}
+	
+	</script>
+</body>
+</html>
