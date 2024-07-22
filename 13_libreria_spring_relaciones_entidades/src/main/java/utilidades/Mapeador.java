@@ -8,9 +8,11 @@ import dao.TemasDao;
 import entities.Cliente;
 import entities.Libro;
 import entities.Tema;
+import entities.Venta;
 import model.ClienteDto;
 import model.LibroDto;
 import model.TemaDto;
+import model.VentaDto;
 @Component
 public class Mapeador {
 	
@@ -48,5 +50,12 @@ public class Mapeador {
 				cliente.getPassword(),
 				cliente.getEmail(),
 				cliente.getTelefono());
+	}
+	
+	public VentaDto ventaEntityToDto(Venta venta) {
+		return new VentaDto(venta.getIdVenta(),
+				venta.getCliente().getUsuario(),
+				venta.getLibro().getTitulo(),
+				venta.getFecha());
 	}
 }
