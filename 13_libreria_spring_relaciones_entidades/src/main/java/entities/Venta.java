@@ -3,6 +3,7 @@ package entities;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,10 +18,10 @@ public class Venta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idVenta;
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="idCliente",referencedColumnName = "idCliente")
 	private Cliente cliente;
-	@ManyToOne()
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="idLibro",referencedColumnName = "isbn")
 	private Libro libro;
 	//La siguiente anotación es conveniente si usamos como campo de fecha un java.util.Date

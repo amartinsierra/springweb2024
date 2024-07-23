@@ -78,4 +78,10 @@ public class LibreriaController {
 	public @ResponseBody TemaDto temaPorTitulo(@RequestParam("titulo") String titulo) {
 		return librosService.buscarTemaTituloLibro(titulo);
 	}
+	
+	@GetMapping(value="misCompras")
+	public String misCompras(Model model, @SessionAttribute("usuario") String usuario) {
+		model.addAttribute("compras", clientesService.ventasCliente(usuario));
+		return "compras";
+	}
 }

@@ -3,6 +3,7 @@ package service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import dao.ClientesDao;
 import dao.VentasDao;
@@ -36,7 +37,7 @@ public class ClientesServiceImpl implements ClientesService {
 		}
 		return false;
 	}
-
+	@Transactional
 	@Override
 	public List<VentaDto> ventasCliente(String usuario) {
 		return ventasDao.findByUsuario(usuario).stream()
