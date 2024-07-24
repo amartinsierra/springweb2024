@@ -15,9 +15,7 @@ public class FormacionServiceImpl implements FormacionService {
 	
 	CursosDao cursosDao;
 	AlumnosDao alumnosDao;
-	Mapeador mapeador;
-	
-
+	Mapeador mapeador;	
 	public FormacionServiceImpl(CursosDao cursosDao, AlumnosDao alumnosDao, Mapeador mapeador) {
 		this.cursosDao = cursosDao;
 		this.alumnosDao = alumnosDao;
@@ -38,6 +36,14 @@ public class FormacionServiceImpl implements FormacionService {
 		return alumnosDao.findByIdCurso(idCurso).stream()
 				.map(a->mapeador.alumnoEntityToDto(a))
 				.toList(); 
+	}
+	@Override
+	public boolean altaCurso(CursoDto curso) {
+		if(cursosDao.findByNombreAndFechaInicio(curso.getNombre(), curso.getFechaInicio())==null) {
+			cursosDao.save(mapeador.cursoDtoToEntity(curso));
+			return true;
+		}
+		return false;
 	}
 
 }
