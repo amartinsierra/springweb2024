@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="Last-Modified" content="0">
+<meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+<meta http-equiv="Pragma" content="no-cache"> 
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<center>
+		<h1>Cursos cuyo precio máximo es <b th:text="${param.precioMax}"></b></h1>
+		<br>
+		
+			<table border="1" th:if="${cursos}">
+				<tr>
+					<th>Nombre</th>
+					<th>Duración</th>
+					<th>Precio</th>
+				</tr>
+				
+				
+					<tr th:each="c:${cursos}">
+						<td th:text="${c.nombre}"></td>
+						<td th:text="${c.duracion}"></td>
+						<td th:text="${c.precio}"></td>
+					</tr>
+			</table>
+		
+		
+			<h1 th:if="${#lists.isEmpty(cursos)}">No hay cursos con ese criterio</h1>
+		
+		<br>
+		<a href="toInicio">volver</a>
+	</center>
+</body>
+</html>
